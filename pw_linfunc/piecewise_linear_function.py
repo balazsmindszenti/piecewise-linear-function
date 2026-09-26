@@ -90,7 +90,7 @@ class PiecewiseLinearFunction:
         Returns the sum of two piecewise linear functions in the usual
         interpretation of function addition, where (f + g)(x) = f(x) + g(x).
         :param PiecewiseLinearFunction f: the function on the right side of the
-                operator
+               operator
         :return PiecewiseLinearFunction: the sum of the two functions
         """
         x_values = []
@@ -136,7 +136,7 @@ class PiecewiseLinearFunction:
         interpretation of function subtraction,
         where (f - g)(x) = f(x) + (-1) * g(x).
         :param PiecewiseLinearFunction f: the function on the right side of the
-                operator
+               operator
         :return PiecewiseLinearFunction: the sum of the two functions
         """
         return self + (-1) * f
