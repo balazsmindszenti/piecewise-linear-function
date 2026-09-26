@@ -124,6 +124,17 @@ class PiecewiseLinearFunction:
         new_point_list = [(x, self(x=x) + f(x=x)) for x in x_values]
         return PiecewiseLinearFunction(point_list=new_point_list)
 
+    def __sub__(self, f: PiecewiseLinearFunction) -> PiecewiseLinearFunction:
+        """
+        Returns the difference of two piecewise linear functions in the usual
+        interpretation of function subtraction,
+        where (f - g)(x) = f(x) + (-1) * g(x).
+        :param PiecewiseLinearFunction f: the function on the right side of the
+                operator
+        :return PiecewiseLinearFunction: the sum of the two functions
+        """
+        return self + (-1) * f
+
     def __rmul__(self, c: float) -> PiecewiseLinearFunction:
         """
         Returns the product of the c real number and the piecewise linear
