@@ -144,6 +144,6 @@ class PiecewiseLinearFunction:
         :return PiecewiseLinearFunction: the product of c and the function
         """
         x_vals, y_vals = zip(*self.point_list)
-        new_y_vals = (c * np.array(y_vals)).tolist()
+        new_y_vals = (c * np.array(y_vals)).round(decimals=6).tolist()
         new_point_list = list(zip(x_vals, new_y_vals))
         return PiecewiseLinearFunction(point_list=new_point_list)
