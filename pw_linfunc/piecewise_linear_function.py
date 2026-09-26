@@ -121,7 +121,13 @@ class PiecewiseLinearFunction:
             x_values.append(f.point_list[j][0])
             j += 1
 
-        new_point_list = [(x, self(x=x) + f(x=x)) for x in x_values]
+        y_values = (
+                np.frompyfunc(self, 1, 1)(np.array(x_values))
+                + np.frompyfunc(f, 1, 1)(np.array(x_values))
+        ).astype(np.float64).round(decimals=6).tolist()
+
+        new_point_list = list(zip(x_values, y_values))
+
         return PiecewiseLinearFunction(point_list=new_point_list)
 
     def __sub__(self, f: PiecewiseLinearFunction) -> PiecewiseLinearFunction:
