@@ -67,6 +67,7 @@ class PiecewiseLinearFunction:
                     'be well-defined. This fails, because '
                     f'{previous} >= {current}.'
                 )
+            previous = current
 
     def linear(self, i: int, x: float) -> float:
         """
