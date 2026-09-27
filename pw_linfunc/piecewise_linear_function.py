@@ -53,10 +53,14 @@ class PiecewiseLinearFunction:
         well-defined piecewise linear function.
         :raise ValueError: if the piecewise linear function is not well-defined
         """
-        for i in range(1, len(self.point_list)):
-            current = self.point_list[i][0]
-            previous = self.point_list[i - 1][0]
-            if current - previous <= 0:
+        if not self.point_list:
+            raise ValueError('The list of tuples must not be an empty list.')
+
+        it = iter(self.point_list)
+        previous = next(it)[0]
+        for tup in it:
+            current = tup[0]
+            if previous >= current:
                 raise ValueError(
                     'The passed elements of the domain must be strictly '
                     'monotone increasing for the piecewise linear function to '
