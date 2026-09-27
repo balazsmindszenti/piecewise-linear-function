@@ -55,7 +55,7 @@ class PiecewiseLinearFunction:
     def __repr__(self) -> str:
         """
         The representation of the class.
-        :return str: the object
+        :return str: the string including the point list that defines the class
         """
         return f"PiecewiseLinearFunction(points={self.point_list})"
 
@@ -90,7 +90,8 @@ class PiecewiseLinearFunction:
 
     def linear_func(self, i: int, x: float | int) -> float:
         """
-        The linear function that maps from [x_i, x_{i+1}] -> [y_i, y_{i+1}].
+        The linear function that goes through (x_i, x_{i+1}) and
+        (y_i, y_{i+1}).
         :param int i: the index of the specific linear function we are using
         :param float | int x: the parameter we call the function on
         :return float: the value that the linear function maps to x
@@ -152,7 +153,7 @@ class PiecewiseLinearFunction:
         Returns the product of the c real number and the piecewise linear
         function in the usual interpretation of scalar multiplication of
         functions, where (c * f)(x) = c * f(x).
-        :param float c: the scalar on the left side of the operator
+        :param float | int c: the scalar on the left side of the operator
         :return PiecewiseLinearFunction: the product of c and the function
         """
         new_point_list = [(x, c * y) for x, y in self.point_list]
