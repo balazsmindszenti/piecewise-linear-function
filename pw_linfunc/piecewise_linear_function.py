@@ -150,6 +150,6 @@ class PiecewiseLinearFunction:
         where (f - g)(x) = f(x) + (-1) * g(x).
         :param PiecewiseLinearFunction f: the function on the right side of the
                operator
-        :return PiecewiseLinearFunction: the sum of the two functions
+        :return PiecewiseLinearFunction: the difference of the two functions
         """
         return self + (-1) * f
