@@ -55,6 +55,8 @@ class PiecewiseLinearFunction:
             return self.point_list[0][1]
         elif x >= self.point_list[-1][0]:
             return self.point_list[-1][1]
+        elif len(self.point_list) == 2:
+            return self.linear_func(i=0, x=x)
         else:
             low = 0
             high = len(self.point_list)
