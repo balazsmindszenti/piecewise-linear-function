@@ -4,7 +4,7 @@ from __future__ import annotations
 class PiecewiseLinearFunction:
     """
     A class that represents a piecewise linear function defined by a list of
-    tuples, which contains real numbers or integers.
+    tuples, which contains real numbers.
     """
     def __init__(self, point_list: list[tuple[float | int, float | int]]):
         """
@@ -45,11 +45,11 @@ class PiecewiseLinearFunction:
         """
         return f"PiecewiseLinearFunction(points={self.point_list})"
 
-    def __call__(self, x: float) -> float:
+    def __call__(self, x: float | int) -> float | int:
         """
         We call the function with the x parameter, a real number.
-        :param float x: the parameter we call the function on
-        :return float: the value that the function maps to x
+        :param float | int x: the parameter we call the function on
+        :return float | int: the value that the function maps to x
         """
         if x <= self.point_list[0][0]:
             return self.point_list[0][1]
@@ -72,11 +72,11 @@ class PiecewiseLinearFunction:
                 else:
                     high = n
 
-    def linear_func(self, i: int, x: float) -> float:
+    def linear_func(self, i: int, x: float | int) -> float:
         """
         The linear function that maps from [x_i, x_{i+1}] -> [y_i, y_{i+1}].
         :param int i: the index of the specific linear function we are using
-        :param float x: the parameter we call the function on
+        :param float | int x: the parameter we call the function on
         :return float: the value that the linear function maps to x
         """
         x_i = self.point_list[i][0]
