@@ -105,7 +105,7 @@ class PiecewiseLinearFunction:
 
         slope = delta_y / delta_x
 
-        return round(slope * (x - x_i) + y_i, ndigits=6)
+        return slope * (x - x_i) + y_i
 
     def __add__(self, f: PiecewiseLinearFunction) -> PiecewiseLinearFunction:
         """
