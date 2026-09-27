@@ -14,7 +14,21 @@ class PiecewiseLinearFunction:
         """
         self.point_list = point_list
 
+        self.check_input_type()
         self.check_well_definedness()
+
+    def check_input_type(self):
+        """
+        This method ensures that the received point list is actually a python
+        list.
+        :raise TypeError: if the point list is not a list
+        """
+        if not isinstance(self.point_list, list):
+            raise TypeError(
+                'The piecewise linear function must be instantiated with a '
+                'list, but was instead instantiated with a'
+                f'{type(self.point_list)}.'
+            )
 
     def check_well_definedness(self):
         """
