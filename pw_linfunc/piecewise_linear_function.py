@@ -38,9 +38,12 @@ class PiecewiseLinearFunction:
             high = len(self.point_list)
             while True:
                 n = (low + high) // 2
-                if self.point_list[n][0] <= x <= self.point_list[n + 1][0]:
+                previous_point = self.point_list[n - 1][0]
+                current_point = self.point_list[n][0]
+                next_point = self.point_list[n + 1][0]
+                if current_point <= x <= next_point:
                     return self.linear(i=n, x=x)
-                elif self.point_list[n - 1][0] <= x < self.point_list[n][0]:
+                elif previous_point <= x < current_point:
                     return self.linear(i=(n - 1), x=x)
                 elif x > self.point_list[n + 1][0]:
                     low = n
