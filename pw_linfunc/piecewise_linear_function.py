@@ -147,7 +147,7 @@ class PiecewiseLinearFunction:
 
         return PiecewiseLinearFunction(point_list=new_point_list)
 
-    def __rmul__(self, c: float) -> PiecewiseLinearFunction:
+    def __rmul__(self, c: float | int) -> PiecewiseLinearFunction:
         """
         Returns the product of the c real number and the piecewise linear
         function in the usual interpretation of scalar multiplication of
