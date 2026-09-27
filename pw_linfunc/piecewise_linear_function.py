@@ -119,7 +119,7 @@ class PiecewiseLinearFunction:
             x_values.append(f.point_list[j][0])
             j += 1
 
-        new_point_list = [(x, self(x=x) + f(x=x)) for x in x_values]
+        new_point_list = [(x, self(x) + f(x)) for x in x_values]
 
         return PiecewiseLinearFunction(point_list=new_point_list)
 
