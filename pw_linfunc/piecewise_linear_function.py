@@ -16,6 +16,28 @@ class PiecewiseLinearFunction:
 
         self.check_well_definedness()
 
+    def check_well_definedness(self):
+        """
+        This method ensures that the received list of tuples define a
+        well-defined piecewise linear function.
+        :raise ValueError: if the piecewise linear function is not well-defined
+        """
+        if not self.point_list:
+            raise ValueError('The list of tuples must not be an empty list.')
+
+        it = iter(self.point_list)
+        previous = next(it)[0]
+        for tup in it:
+            current = tup[0]
+            if previous >= current:
+                raise ValueError(
+                    'The passed elements of the domain must be strictly '
+                    'monotone increasing for the piecewise linear function to '
+                    'be well-defined. This fails, because '
+                    f'{previous} >= {current}.'
+                )
+            previous = current
+
     def __repr__(self) -> str:
         """
         The representation of the class.
@@ -49,28 +71,6 @@ class PiecewiseLinearFunction:
                     low = n
                 else:
                     high = n
-
-    def check_well_definedness(self):
-        """
-        This method ensures that the received list of tuples define a
-        well-defined piecewise linear function.
-        :raise ValueError: if the piecewise linear function is not well-defined
-        """
-        if not self.point_list:
-            raise ValueError('The list of tuples must not be an empty list.')
-
-        it = iter(self.point_list)
-        previous = next(it)[0]
-        for tup in it:
-            current = tup[0]
-            if previous >= current:
-                raise ValueError(
-                    'The passed elements of the domain must be strictly '
-                    'monotone increasing for the piecewise linear function to '
-                    'be well-defined. This fails, because '
-                    f'{previous} >= {current}.'
-                )
-            previous = current
 
     def linear(self, i: int, x: float) -> float:
         """
@@ -131,17 +131,6 @@ class PiecewiseLinearFunction:
 
         return PiecewiseLinearFunction(point_list=new_point_list)
 
-    def __sub__(self, f: PiecewiseLinearFunction) -> PiecewiseLinearFunction:
-        """
-        Returns the difference of two piecewise linear functions in the usual
-        interpretation of function subtraction,
-        where (f - g)(x) = f(x) + (-1) * g(x).
-        :param PiecewiseLinearFunction f: the function on the right side of the
-               operator
-        :return PiecewiseLinearFunction: the sum of the two functions
-        """
-        return self + (-1) * f
-
     def __rmul__(self, c: float) -> PiecewiseLinearFunction:
         """
         Returns the product of the c real number and the piecewise linear
@@ -153,3 +142,14 @@ class PiecewiseLinearFunction:
         new_point_list = [(x, c * y) for x, y in self.point_list]
 
         return PiecewiseLinearFunction(point_list=new_point_list)
+
+    def __sub__(self, f: PiecewiseLinearFunction) -> PiecewiseLinearFunction:
+        """
+        Returns the difference of two piecewise linear functions in the usual
+        interpretation of function subtraction,
+        where (f - g)(x) = f(x) + (-1) * g(x).
+        :param PiecewiseLinearFunction f: the function on the right side of the
+               operator
+        :return PiecewiseLinearFunction: the sum of the two functions
+        """
+        return self + (-1) * f
