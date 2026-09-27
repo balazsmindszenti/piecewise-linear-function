@@ -4,13 +4,13 @@ from __future__ import annotations
 class PiecewiseLinearFunction:
     """
     A class that represents a piecewise linear function defined by a list of
-    tuples.
+    tuples, which contains real numbers or integers.
     """
-    def __init__(self, point_list: list[tuple[float, float]]):
+    def __init__(self, point_list: list[tuple[float | int, float | int]]):
         """
         Constructor.
-        :param list[tuple[float, float]] point_list: the list of tuples that
-               defines the piecewise linear function
+        :param list[tuple[float | int, float | int]] point_list: the list of
+               tuples that defines the piecewise linear function
         """
         self.point_list = point_list
 
