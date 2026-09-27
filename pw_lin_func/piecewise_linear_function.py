@@ -54,10 +54,30 @@ class PiecewiseLinearFunction:
 
     def __repr__(self) -> str:
         """
-        The representation of the class.
+        The representation of the class. This is a string that includes the
+        point list that defines the class, unless that would be too long to
+        show, in which case the first five and last five elements are shown.
         :return str: the string including the point list that defines the class
         """
-        return f"PiecewiseLinearFunction(points={self.point_list})"
+        if len(self.point_list) <= 10:
+            printed_list = [
+                (round(number=x, ndigits=4), round(number=y, ndigits=4))
+                for x, y in self.point_list
+            ]
+            return f"PiecewiseLinearFunction(points={printed_list})"
+        else:
+            first_five = [
+                (round(number=x, ndigits=4), round(number=y, ndigits=4))
+                for x, y in self.point_list[:5]
+            ]
+            last_five = [
+                (round(number=x, ndigits=4), round(number=y, ndigits=4))
+                for x, y in self.point_list[-5:]
+            ]
+            first_five_str = ", ".join(str(point) for point in first_five)
+            last_five_str = ", ".join(str(point) for point in last_five)
+            return ("PiecewiseLinearFunction(points="
+                    f"[{first_five_str}, ..., {last_five_str}])")
 
     def __call__(self, x: float | int) -> float | int:
         """
