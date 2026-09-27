@@ -64,15 +64,15 @@ class PiecewiseLinearFunction:
                 current_point = self.point_list[n][0]
                 next_point = self.point_list[n + 1][0]
                 if current_point <= x <= next_point:
-                    return self.linear(i=n, x=x)
+                    return self.linear_func(i=n, x=x)
                 elif previous_point <= x < current_point:
-                    return self.linear(i=(n - 1), x=x)
+                    return self.linear_func(i=(n - 1), x=x)
                 elif x > self.point_list[n + 1][0]:
                     low = n
                 else:
                     high = n
 
-    def linear(self, i: int, x: float) -> float:
+    def linear_func(self, i: int, x: float) -> float:
         """
         The linear function that maps from [x_i, x_{i+1}] -> [y_i, y_{i+1}].
         :param int i: the index of the specific linear function we are using
