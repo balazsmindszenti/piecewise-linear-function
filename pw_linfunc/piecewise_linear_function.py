@@ -61,7 +61,7 @@ class PiecewiseLinearFunction:
                     'The passed elements of the domain must be strictly '
                     'monotone increasing for the piecewise linear function to '
                     'be well-defined. This fails, because '
-                    f'{current} <= {previous}.'
+                    f'{previous} >= {current}.'
                 )
 
     def linear(self, i: int, x: float) -> float:
