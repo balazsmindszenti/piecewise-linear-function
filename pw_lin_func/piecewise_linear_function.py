@@ -26,7 +26,7 @@ class PiecewiseLinearFunction:
         if not isinstance(self.point_list, list):
             raise TypeError(
                 'The piecewise linear function must be instantiated with a '
-                'list, but was instead instantiated with a'
+                'list, but was instead instantiated with a '
                 f'{type(self.point_list)}.'
             )
 
