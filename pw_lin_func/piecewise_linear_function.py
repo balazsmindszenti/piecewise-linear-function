@@ -128,45 +128,72 @@ class PiecewiseLinearFunction:
 
         return slope * (x - x_i) + y_i
 
-    def __add__(self, f: PiecewiseLinearFunction) -> PiecewiseLinearFunction:
+    def __add__(self,
+                f: PiecewiseLinearFunction | float | int
+                ) -> PiecewiseLinearFunction:
         """
         Returns the sum of two piecewise linear functions in the usual
-        interpretation of function addition, where (f + g)(x) = f(x) + g(x).
-        :param PiecewiseLinearFunction f: the function on the right side of the
-               operator
-        :return PiecewiseLinearFunction: the sum of the two functions
+        interpretation of function addition, where (f + g)(x) = f(x) + g(x), or
+        the sum of a function and a real number (the translation of the
+        function on the y-axis).
+        :param PiecewiseLinearFunction | float | int f: the function or the
+               real number on the right side of the operator
+        :raise TypeError: if attempting addition by an unsupported type
+        :return PiecewiseLinearFunction: the resulting function
         """
-        x_values = []
+        if isinstance(f, PiecewiseLinearFunction):
+            x_values = []
 
-        i = 0
-        j = 0
-        m = len(self.point_list)
-        n = len(f.point_list)
+            i = 0
+            j = 0
+            m = len(self.point_list)
+            n = len(f.point_list)
 
-        while i < m and j < n:
-            a = self.point_list[i][0]
-            b = f.point_list[j][0]
-            if a == b:
-                x_values.append(a)
+            while i < m and j < n:
+                a = self.point_list[i][0]
+                b = f.point_list[j][0]
+                if a == b:
+                    x_values.append(a)
+                    i += 1
+                    j += 1
+                elif a < b:
+                    x_values.append(a)
+                    i += 1
+                else:
+                    x_values.append(b)
+                    j += 1
+
+            while i < m:
+                x_values.append(self.point_list[i][0])
                 i += 1
-                j += 1
-            elif a < b:
-                x_values.append(a)
-                i += 1
-            else:
-                x_values.append(b)
+            while j < n:
+                x_values.append(f.point_list[j][0])
                 j += 1
 
-        while i < m:
-            x_values.append(self.point_list[i][0])
-            i += 1
-        while j < n:
-            x_values.append(f.point_list[j][0])
-            j += 1
+            new_point_list = [(x, self(x) + f(x)) for x in x_values]
 
-        new_point_list = [(x, self(x) + f(x)) for x in x_values]
+            return PiecewiseLinearFunction(point_list=new_point_list)
+        elif isinstance(f, (float, int)):
+            new_point_list = [(x, y + f) for x, y in self.point_list]
 
-        return PiecewiseLinearFunction(point_list=new_point_list)
+            return PiecewiseLinearFunction(point_list=new_point_list)
+        else:
+            raise TypeError('Addition is only supported for real numbers and '
+                            'other piecewise linear functions.')
+
+    def __radd__(self,
+                 f: PiecewiseLinearFunction | float | int
+                 ) -> PiecewiseLinearFunction:
+        """
+        Returns the sum of two piecewise linear functions in the usual
+        interpretation of function addition, where (g + f)(x) = g(x) + f(x), or
+        the sum of a function and a real number (the translation of the
+        function on the y-axis).
+        :param PiecewiseLinearFunction | float | int f: the function or the
+               real number on the left side of the operator
+        :return PiecewiseLinearFunction: the resulting function
+        """
+        return self + f
 
     def __rmul__(self, c: float | int) -> PiecewiseLinearFunction:
         """
@@ -180,13 +207,42 @@ class PiecewiseLinearFunction:
 
         return PiecewiseLinearFunction(point_list=new_point_list)
 
-    def __sub__(self, f: PiecewiseLinearFunction) -> PiecewiseLinearFunction:
+    def __mul__(self, c: float | int) -> PiecewiseLinearFunction:
+        """
+        Returns the product of the c real number and the piecewise linear
+        function in the usual interpretation of scalar multiplication of
+        functions, where (f * c)(x) = f(x) * c.
+        :param float | int c: the scalar on the right side of the operator
+        :return PiecewiseLinearFunction: the product of c and the function
+        """
+        return c * self
+
+    def __sub__(self,
+                f: PiecewiseLinearFunction | float | int
+                ) -> PiecewiseLinearFunction:
         """
         Returns the difference of two piecewise linear functions in the usual
         interpretation of function subtraction,
-        where (f - g)(x) = f(x) + (-1) * g(x).
-        :param PiecewiseLinearFunction f: the function on the right side of the
-               operator
-        :return PiecewiseLinearFunction: the difference of the two functions
+        where (f - g)(x) = f(x) + (-1) * g(x), or the subtraction of a real
+        number from the function (the translation of the function on the
+        y-axis).
+        :param PiecewiseLinearFunction | float | int f: the function or real
+               number on the right side of the operator
+        :return PiecewiseLinearFunction: the resulting function
         """
         return self + (-1) * f
+
+    def __rsub__(self,
+                 f: PiecewiseLinearFunction | float | int
+                 ) -> PiecewiseLinearFunction:
+        """
+        Returns the difference of two piecewise linear functions in the usual
+        interpretation of function subtraction,
+        where (g - f)(x) = g(x) + (-1) * f(x), or the subtraction of a function
+        from a real number (the translation on the y-axis of the reflection
+        of the function on the x-axis).
+        :param PiecewiseLinearFunction | float | int f: the function or real
+               number on the right side of the operator
+        :return PiecewiseLinearFunction: the resulting function
+        """
+        return f + (-1) * self
