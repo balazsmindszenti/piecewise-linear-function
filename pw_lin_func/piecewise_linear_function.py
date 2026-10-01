@@ -179,7 +179,7 @@ class PiecewiseLinearFunction:
             return PiecewiseLinearFunction(point_list=new_point_list)
         else:
             raise TypeError('Addition is only supported for real numbers and '
-                            'other piecewise linear functions')
+                            'other piecewise linear functions.')
 
     def __radd__(self,
                  f: PiecewiseLinearFunction | float | int
